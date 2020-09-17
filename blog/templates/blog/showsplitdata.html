@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  <link rel="stylesheet" href="{% static 'blog/css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'blog/css/bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'blog/css/css.css' %}">
+  <link rel="stylesheet" href="{% static 'blog/js/all.min.js' %}">
+  <link rel="stylesheet" href="{% static 'split/js/bootstrap.js' %}">
+  <link rel="stylesheet" href="{% static 'blog/js/bootstrap.bundle.min.js' %}">
+  <link rel="stylesheet" href="{% static 'blog/js/fontawesome.min.js' %}">
+  <link rel="stylesheet" href="{% static 'blog/js/jquery.js' %}">
+    <link rel="stylesheet" href="{% static 'blog/js/popper.js' %}">
+  
+</head>
+<body>
+    <!-- --------------------------------------------------------------------------------- -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+    <a class="navbar-brand" href="#">Prarabdha Electronics</a>
+    <ul class="navbar-nav">
+      
+      {% if request.user.is_authenticated %}
+      <li class="nav-item {{ active }}">
+        <a class="nav-link" href="">Dashboard</a>
+      </li>
+      <li class="nav-item {{ active }}">
+        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+      </li>
+      {% else %}
+      <li class="nav-item {{ active }}">
+        <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item {{ active }}">
+        <a class="nav-link" href="">About Us</a>
+      </li>
+      <li class="nav-item {{ active }}">
+        <a class="nav-link" href="">Contact Us</a>
+      </li>
+      <li class="nav-item {{ active }}">
+        <a class="nav-link" href="">Signup</a>
+      </li>
+      <li class="nav-item {{ active }}">
+        <a class="nav-link" href="{% url 'logout' %}">Login</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+  
+<!-- ------------------------------------------------------------------------------------------------ -->
+
+<div >
+
+ <h4 class=" font-weight-bold text-center" >Voltage & Current Reading.</h4>
+
+</div>
+
+    
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-2 table-responsive " style="width: 100%; height: 560px; overflow: auto; ">
+          
+          <table class="table table-hover">
+            <thead>
+            <tr  style="text-align:center">
+            <th scope="col">ID</th>
+            </tr>
+            </thead>
+            {% for post in posts %}
+            <tbody>
+        <tr >
+         <th><a href="{% url 'showdataindividual' post.id %}" style="width:100%" class="btn btn-info">{{post.id}}</a></th>
+        
+        </tr>
+      </tbody>
+        {% endfor %}
+        </table>
+      </div>
+  
+      <!-- ----------------------------------------------------------------------------------------- -->
+      
+      <div class="col-sm-10 table-responsive bg-secondary  " style="overflow: auto; height: 560px; width: 100%; " >
+          
+        <table class="table table-hover ">
+          <thead>
+            <tr  style="text-align:center">
+            <th scope="col"  >ID</th>
+            <th scope="col"  >R Volt</th>
+            <th scope="col"  >R Current</th>
+            <th scope="col"  >Y Volt</th>
+            <th scope="col"  >Y Current</th>
+            <th scope="col"  >B Volt</th>
+            <th scope="col"  >B Current</th>
+            <th scope="col"  >Battory</th>
+            <th scope="col"  >Options</th>
+            </tr>
+          </thead>
+            
+            <tbody>
+              {% for post in posts %}
+            <tr class="text-white" style="text-align:center">
+                <td > {{post.id}} </td>
+                <td > {{post.rvolt}} </td>
+                <td > {{post.rcurrent}} </td>
+                <td > {{post.yvolt}} </td>
+                <td > {{post.ycurrent}} </td>
+                <td > {{post.bvolt}} </td>
+                <td > {{post.bcurrent}} </td>
+                <td > {{post.battery}} </td>
+                <td >
+                <a href="{% url 'ron_data' post.id 1 %}" class="btn btn-success">On</a>
+                <a href="{% url 'roff_data' post.id 0 %}" class="btn btn-danger">Off</a>
+                </td>
+               </tr>
+                {% endfor %}
+               </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+
+        
+            
+        
+        <!-- <input type="submit" value="submit">
+        <progress id="progress" value="0"></progress>
+<button id="button">Start uploading</button>
+<span id="display"></span> -->
+
+</div>
+</body>
+</html>

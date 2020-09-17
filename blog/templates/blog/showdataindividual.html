@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  
+  <link rel="stylesheet" href="{% static 'blog/css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'blog/css/bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'blog/css/css.css' %}">
+  <link rel="stylesheet" href="{% static 'blog/js/all.min.js' %}">
+  <link rel="stylesheet" href="{% static 'blog/js/bootstrap.js' %}">
+  <link rel="stylesheet" href="{% static 'blog/js/bootstrap.bundle.min.js' %}">
+  <link rel="stylesheet" href="{% static 'blog/js/fontawesome.min.js' %}">
+  <link rel="stylesheet" href="{% static 'blog/js/jquery.js' %}">
+    <link rel="stylesheet" href="{% static 'blog/js/popper.js' %}">
+
+</head>
+<body>
+    <!-- --------------------------------------------------------------------------------- -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+    <a class="navbar-brand" href="#">Prarabdha Electronics</a>
+    <ul class="navbar-nav">
+      
+      {% if request.user.is_authenticated %}
+      <li class="nav-item {{ active }}">
+        <a class="nav-link" href="">Dashboard</a>
+      </li>
+      <li class="nav-item {{ active }}">
+        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+      </li>
+      {% else %}
+      <li class="nav-item {{ active }}">
+        <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item {{ active }}">
+        <a class="nav-link" href="">About Us</a>
+      </li>
+      <li class="nav-item {{ active }}">
+        <a class="nav-link" href="">Contact Us</a>
+      </li>
+      <li class="nav-item {{ active }}">
+        <a class="nav-link" href="">Signup</a>
+      </li>
+      <li class="nav-item {{ active }}">
+        <a class="nav-link" href="{% url 'logout' %}">Login</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+  <!---------------------------------------------------------------------------------->
+  <div >
+
+ <h4 class=" font-weight-bold text-center" >Individual Device Voltage & Current Reading.</h4>
+
+</div>
+<!-------------------------------------------------------------------------------------------------------->
+ <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-2 table-responsive " style="width: 100%; height: 560px; overflow: auto; ">
+          
+          <table class="table">
+            <thead>
+            <tr  style="text-align:center">
+            <th scope="col">ID</th>
+            </tr>
+            </thead>
+            {% for post in posts %}
+            <tbody>
+        <tr >
+
+          <th><a href="{% url 'showdataindividual' post.id %}" style="width:100%" class="btn btn-info">{{post.id}}</a></th>
+        
+        </tr>
+      </tbody>
+        {% endfor %}
+        </table>
+      </div>
+      <!-- -------------------------------------------------------------------------------------------- -->
+      <div class="col-sm-10 table-responsive " style="width: 100%; height: 560px; overflow: auto; ">
+  <div>{{onlydata.id}}</div>
+<div class="container py-5">
+    <div class="row">  
+      <div class="col-xl-4 col-lg-6 mb-4">
+        <div class="bg-secondary rounded-lg p-5 shadow">
+          <h2 class="h5 font-weight-bold text-center mb-4">R Phase</h2>
+  
+          <!-- Progress bar 1 -->
+          <div class="progress mx-auto" data-value='80'>
+            <span class="progress-left">
+                          <span class="progress-bar border-primary"></span>
+            </span>
+            <span class="progress-right">
+                          <span class="progress-bar border-primary"></span>
+            </span>
+            <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+              <div class="h2 font-weight-bold">{{onlydata.rvolt}}<sup class="small">V</sup></div>
+            </div>
+          </div>
+          <!-- END -->
+  
+          <!-- Demo info -->
+          <div class="row text-center mt-4">
+            <div class="col-6 border-right">
+              <div class="h4 font-weight-bold mb-0">{{onlydata.rvolt}}V</div><span class="small text-gray">Voltage</span>
+                <div><a href="{% url 'ron_data' onlydata.id 1 %}" style="width:100%" class="btn btn-success font-weight-bold mb-1">On</a></div>
+            </div>
+            <div class="col-6">
+              <div class="h4 font-weight-bold mb-0">{{onlydata.rcurrent}}i</div><span class="small text-gray">Current</span>
+            <div><a href="{% url 'roff_data' onlydata.id 0 %}" style="width:100%" class="btn btn-danger font-weight-bold mb-1">Off</a></div>
+            </div>
+          </div>
+          <!-- END -->
+        </div>
+      </div>
+  <!-- ------------------------------------------------------------------------------------------------- -->
+      <div class="col-xl-4 col-lg-6 mb-4">
+        <div class="bg-secondary rounded-lg p-5 shadow">
+          <h2 class="h5 font-weight-bold text-center mb-4">Y Phase</h2>
+  
+          <!-- Progress bar 2 -->
+          <div class="progress mx-auto" data-value='25'>
+            <span class="progress-left">
+                          <span class="progress-bar border-danger"></span>
+            </span>
+            <span class="progress-right">
+                          <span class="progress-bar border-danger"></span>
+            </span>
+            <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+              <div class="h2 font-weight-bold">{{onlydata.yvolt}}<sup class="small">V</sup></div>
+            </div>
+          </div>
+          <!-- END -->
+  
+          <!-- Demo info-->
+          <div class="row text-center mt-4">
+            <div class="col-6 border-right">
+              <div class="h4 font-weight-bold mb-0">{{onlydata.yvolt}}V</div><span class="small text-gray ">Voltage</span>
+              <div><a href="{% url 'yon_data' onlydata.id 1 %}" style="width:100%" class="btn btn-success font-weight-bold mb-1">On</a></div>
+            </div>
+            <div class="col-6">
+              <div class="h4 font-weight-bold mb-0">{{onlydata.ycurrent}}i</div><span class="small text-gray ">Current</span>
+              <div><a href="{% url 'yoff_data' onlydata.id 0 %}" style="width:100%" class="btn btn-danger font-weight-bold mb-1">Off</a></div>
+            </div>
+            
+          </div>
+          <!-- END -->
+        </div>
+      </div>
+  <!-- ---------------------------------------------------------------------------------------------------------- -->
+      <div class="col-xl-4 col-lg-6 mb-4">
+        <div class="bg-secondary rounded-lg p-5 shadow">
+          <h2 class="h5 font-weight-bold text-center mb-4">B Phase</h2>
+  
+          <!-- Progress bar 3 -->
+          <div class="progress mx-auto" data-value='76'>
+            <span class="progress-left">
+                          <span class="progress-bar border-success"></span>
+            </span>
+            <span class="progress-right">
+                          <span class="progress-bar border-success"></span>
+            </span>
+            <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+              <div class="h2 font-weight-bold">{{onlydata.bvolt}}<sup class="small">V</sup></div>
+            </div>
+          </div>
+          <!-- END -->
+  
+          <!-- Demo info -->
+          <div class="row text-center mt-4">
+            <div class="col-6 border-right">
+              <div class="h4 font-weight-bold mb-0">{{onlydata.bvolt}}V</div><span class="small text-gray">Voltage</span>
+                <div><a href="{% url 'bon_data' onlydata.id 1 %}" style="width:100%" class="btn btn-success font-weight-bold mb-1">On</a></div>
+            </div>
+            <div class="col-6">
+              <div class="h4 font-weight-bold mb-0">{{onlydata.bcurrent}}i</div><span class="small text-gray">Current</span>
+                <div><a href="{% url 'boff_data' onlydata.id 0 %}" style="width:100%" class="btn btn-danger font-weight-bold mb-1">Off</a></div>
+            </div>
+          </div>
+          <!-- END -->
+        </div>
+      </div>
+  
+ 
+    </div>
+  </div>
+
+  </body>
+  </html>
