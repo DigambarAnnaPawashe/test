@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, User
 from django.contrib.auth.models import User
 from django.utils.translation import gettext, gettext_lazy as _
 from .models import Post
-from .models import  ValueOfSpliteData, OnoffValue
+from .models import  ValueOfSpliteData, OnoffValue, AddDevice
 # Create your views here.
 
 
@@ -12,6 +12,12 @@ class AddDataForSplite(forms.ModelForm):
     class Meta:
         model = ValueOfSpliteData
         fields = ['id','rvolt','rcurrent','yvolt','ycurrent','bvolt','bcurrent','battery']
+
+class AddDeviceForm(forms.ModelForm):
+    class Meta:
+        model = AddDevice
+        fields = ['id','name','adress','rmax','rmin','ymax','ymin','bmax','bmin','bmin']
+        label = { 'id': 'Device ID' }
 
 class FormOnoff(forms.ModelForm):
     class Meta:

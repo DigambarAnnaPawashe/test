@@ -39,4 +39,6 @@ urlpatterns = [
     path('bon_data/<int:my_id>/<str:my_value>/', views.bon_data, name='bon_data'),
     path('boff_data/<int:my_id>/<str:my_value>/', views.boff_data, name='boff_data'),
     path('showdataindividual/<int:my_id>/', views.showdataindividual_data, name='showdataindividual'),
+
+    path('adddevice/', views.add_device, name='adddevice'),
 ]

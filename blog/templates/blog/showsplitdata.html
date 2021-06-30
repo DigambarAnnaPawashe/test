@@ -29,6 +29,9 @@
       <li class="nav-item {{ active }}">
         <a class="nav-link" href="{% url 'logout' %}">Logout</a>
       </li>
+      <li class="nav-item {{ active }}">
+        <a class="nav-link" href="{% url 'adddevice' %}">Add Device</a>
+      </li>
       {% else %}
       <li class="nav-item {{ active }}">
         <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
@@ -68,7 +71,7 @@
             <th scope="col">ID</th>
             </tr>
             </thead>
-            {% for post in posts %}
+            {% for post in devices %}
             <tbody>
         <tr >
          <th><a href="{% url 'showdataindividual' post.id %}" style="width:100%" class="btn btn-info">{{post.id}}</a></th>

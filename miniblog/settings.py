@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'miniblog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'streetlightdb',
+        'NAME': 'streetlight2',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',
@@ -110,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC+05:30'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 

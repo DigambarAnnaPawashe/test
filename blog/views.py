@@ -1,8 +1,8 @@
 from django.shortcuts import render, HttpResponseRedirect
-from .forms import SignUpForm, LoginForm, PostForm
+from .forms import SignUpForm, LoginForm, PostForm, AddDeviceForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from blog.models import Post, OnoffValue, ValueOfSpliteData
+from blog.models import Post, OnoffValue, ValueOfSpliteData, AddDevice
 from django.contrib.auth.models import Group
 # Create your views here.
 from .forms import  AddDataForSplite, FormOnoff
@@ -40,10 +40,16 @@ def sign_up1(request, my_id,  rvolt, rcurrent, yvolt, ycurrent,  bvolt, bcurrent
 
 def showdata(request):
     if request.user.is_authenticated:
-        posts = ValueOfSpliteData.objects.all()
-        return render(request, 'blog/showsplitdata.html', {'posts':posts})
+        users= request.user.id
+        print('***************id****************')
+        print (users)
+        devices= AddDevice.objects.filter(deviceuser_id = users)
+        rybdata = ValueOfSpliteData.objects.filter(rybeuser_id = users)
+        return render(request, 'blog/showsplitdata.html', {'posts':rybdata, 'devices': devices})
     else:
         return HttpResponseRedirect('/login/')
+
+
 
 def showdataindividual_data(request, my_id):
     if request.user.is_authenticated:
@@ -235,8 +241,8 @@ def user_signup(request):
             if form.is_valid():
                 messages.success(request, 'Congratulations!! You have become an Author.')
                 form.save()
-                group = Group.objects.get(name='Author')
-                user.groups.add(group)
+                # group = Group.objects.get(name='Author')
+                # user.groups.add(group)
                 form = SignUpForm()
         else:
             form = SignUpForm()
@@ -303,5 +309,27 @@ def delete_post(request, id):
             return HttpResponseRedirect('/dashboard/')
         else:
             return HttpResponseRedirect('/dashboard/')
+    else:
+        return HttpResponseRedirect('/login/')
+
+
+def add_device(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = AddDeviceForm(request.POST)
+            if form.is_valid():
+                messages.success(request, 'Congratulations!! Add Device.')
+                device = form.save(commit=False)
+                users = request.user
+                device.deviceuser = users
+                splitdata = ValueOfSpliteData()
+                splitdata.rybeuser = users
+                splitdata.save()
+                device.devicerybdata= splitdata
+                device.save()
+        else:
+            form = AddDeviceForm()
+            print('add device')
+        return render(request, 'blog/adddevice.html', {'form':form, 'active':'active'})
     else:
         return HttpResponseRedirect('/login/')
